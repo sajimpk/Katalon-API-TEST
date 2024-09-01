@@ -1,0 +1,19 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: cimg/python:3.11
+    steps:
+      - checkout
+      - run: wget https://download.katalon.com/9.7.1/Katalon_Studio_Engine_Windows_64-9.7.1.zip \
+      && unzip Katalon_Studio_Engine_Windows_64-9.7.1.zip \
+      && rm Katalon_Studio_Engine_Windows_64-9.7.1.zip
+  
+
+
+
+workflows:
+  build_and_test_deploy:
+    jobs:
+      - build
