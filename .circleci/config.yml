@@ -6,15 +6,15 @@ jobs:
       - image: cimg/python:3.11
     steps:
       - checkout
+      - WORKDIR: /opt
       - run: wget https://download.katalon.com/9.7.1/Katalon_Studio_Engine_Windows_64-9.7.1.zip
       - run: unzip Katalon_Studio_Engine_Windows_64-9.7.1.zip
       - run: rm Katalon_Studio_Engine_Windows_64-9.7.1.zip
       - run: cd Katalon_Studio_Engine_Windows_64-9.7.1
-      - run: ../katalonc -noSplash -runMode=console -projectPath="./webTest.prj" -retry=0 -testSuitePath="Test Suites/Bikroi_test_Case" -browserType="Chrome" -executionProfile="default" -apiKey="4663dda7-4802-4448-b1df-6bdcab360878" --config -proxy.auth.option=NO_PROXY -proxy.system.option=NO_PROXY -proxy.system.applyToDesiredCapabilities=true -webui.autoUpdateDrivers=true
-
-  
-
-
+      - WORKDIR: /root
+      - run: git clone https://github.com/sajimpk/WebTest-katalon.git
+      - WORKDIR: /root/WebTest-katalon/Katalon_Studio_Engine_Windows_64-9.7.1
+      - cmd: katalonc -noSplash -runMode=console -projectPath="/root/WebTest-katalon/webTest.prj" -retry=0 -testSuitePath="Test Suites/Bikroi_test_Case" -browserType="Chrome" -executionProfile="default" -apiKey="4663dda7-4802-4448-b1df-6bdcab360878" --config -proxy.auth.option=NO_PROXY -proxy.system.option=NO_PROXY -proxy.system.applyToDesiredCapabilities=true -webui.autoUpdateDrivers=true
 
 workflows:
   build_and_test_deploy:
